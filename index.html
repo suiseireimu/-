@@ -141,15 +141,6 @@
                 location.reload();
             }
         }
-
-        // Share the page
-        function sharePage() {
-            const url = window.location.href;
-            navigator.clipboard.writeText(url).then(() => {
-                alert('Page link copied to clipboard!');
-            });
-        }
-
         // Load edits on page load
         window.onload = loadEdits;
     </script>
