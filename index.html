@@ -167,6 +167,20 @@
     <p>&copy; 2024 Alan and Isabella</p>
   </footer>
   <script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const textareas = document.querySelectorAll("textarea");
+
+  // Load saved notes from localStorage
+  textareas.forEach((textarea) => {
+    const key = textarea.dataset.key;
+    textarea.value = localStorage.getItem(key) || "";
+
+    // Save to localStorage on input
+    textarea.addEventListener("input", () => {
+      localStorage.setItem(key, textarea.value);
+    });
+  });
+});
     // JavaScript for search functionality
     document.getElementById("search-bar").addEventListener("input", function () {
       const query = this.value.toLowerCase();
