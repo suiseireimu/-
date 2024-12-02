@@ -1,146 +1,186 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shared profile of <em>Never let me go</em></title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background: #333;
-            color: #fff;
-            padding: 10px 20px;
-            text-align: center;
-        }
-        nav {
-            display: flex;
-            justify-content: center;
-            background: #444;
-            color: #fff;
-            padding: 10px;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        section {
-            padding: 20px;
-        }
-        .editable {
-            border: 1px dashed #ccc;
-            padding: 10px;
-            margin: 10px 0;
-            background: #f9f9f9;
-        }
-        .editable:focus {
-            outline: none;
-            border: 1px solid #333;
-        }
-        footer {
-            background: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        button {
-            background: #444;
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #555;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><em>Never Let Me Go - Notes </em></title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    header h2 {
+      font-weight: normal;
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      padding: 0;
+      list-style: none;
+      background-color: #333;
+    }
+
+    nav ul li {
+      margin: 0 10px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      padding: 10px 20px;
+      display: block;
+    }
+
+    nav ul li a:hover {
+      background-color: #575757;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    .chapter {
+      margin-bottom: 40px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin-bottom: 20px;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: vertical;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #333;
+      color: white;
+    }
+
+    #search-bar {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1><em>Never Let Me Go</em></h1>
-    </header>
+  <header>
+    <h1>Notes for "Never Let Me Go"</h1>
+    <h2>By Alan and Isabella</h2>
+    <input id="search-bar" type="text" placeholder="Search for chapters, settings, or characters...">
+  </header>
+  <main>
+    <!-- Chapters Navigation -->
     <nav>
-        <a href="#overview">Overview</a>
-        <a href="#characters">Characters</a>
-        <a href="#themes">Themes</a>
-        <a href="#edit">Edit Info</a>
+      <ul>
+        <li><a href="#chapter1">Chapter 1</a></li>
+        <li><a href="#chapter2">Chapter 2</a></li>
+        <li><a href="#chapter3">Chapter 3</a></li>
+        <li><a href="#chapter4">Chapter 4</a></li>
+        <li><a href="#chapter5">Chapter 5</a></li>
+        <li><a href="#chapter6">Chapter 6</a></li>
+      </ul>
     </nav>
-    <section id="overview">
-        <h2>Overview</h2>
-        <p class="editable" contenteditable="true">
-            "Never Let Me Go" is a dystopian science fiction novel by Kazuo Ishiguro. It explores the lives of three friends—Kathy, Tommy, and Ruth—who discover unsettling truths about their existence and purpose in life.
-        </p>
-    </section>
-    <section id="characters">
-        <h2>Characters</h2>
-        <ul class="editable" contenteditable="true">
-            <li>Kathy H.</li>
-            <li>Tommy</li>
-            <li>Ruth</li>
-        </ul>
-    </section>
-    <section id="themes">
-        <h2>Themes</h2>
-        <p class="editable" contenteditable="true">
-            The novel delves into themes of identity, humanity, love, loss, and the ethical implications of scientific advancements.
-        </p>
-    </section>
-    <section id="edit">
-        <h2>Edit Information</h2>
-        <p>You can edit the text in the above sections directly. Click anywhere to modify!</p>
-        <button onclick="saveEdits()">Save Edits</button>
-        <button onclick="clearEdits()">Clear Saved Data</button>
-    </section>
 
+    <!-- Chapters Section -->
+    <section id="chapters">
+      <!-- Template for each chapter -->
+      <div id="chapter1" class="chapter">
+        <h3>Chapter 1</h3>
+        <h4>Settings</h4>
+        <textarea placeholder="Write about the setting here..."></textarea>
+        <h4>Characters and Their Personalities</h4>
+        <textarea placeholder="Write about characters and their personalities here..."></textarea>
+      </div>
 
+      <div id="chapter2" class="chapter">
+        <h3>Chapter 2</h3>
+        <h4>Settings</h4>
+        <textarea placeholder="Write about the setting here..."></textarea>
+        <h4>Characters and Their Personalities</h4>
+        <textarea placeholder="Write about characters and their personalities here..."></textarea>
+      </div>
+
+      <div id="chapter3" class="chapter">
+        <h3>Chapter 3</h3>
+        <h4>Settings</h4>
+        <textarea placeholder="Write about the setting here..."></textarea>
+        <h4>Characters and Their Personalities</h4>
+        <textarea placeholder="Write about characters and their personalities here..."></textarea>
+      </div>
+
+      <div id="chapter4" class="chapter">
+        <h3>Chapter 4</h3>
+        <h4>Settings</h4>
+        <textarea placeholder="Write about the setting here..."></textarea>
+        <h4>Characters and Their Personalities</h4>
+        <textarea placeholder="Write about characters and their personalities here..."></textarea>
+      </div>
+
+      <div id="chapter5" class="chapter">
+        <h3>Chapter 5</h3>
+        <h4>Settings</h4>
+        <textarea placeholder="Write about the setting here..."></textarea>
+        <h4>Characters and Their Personalities</h4>
+        <textarea placeholder="Write about characters and their personalities here..."></textarea>
+      </div>
+
+      <div id="chapter6" class="chapter">
+        <h3>Chapter 6</h3>
+        <h4>Settings</h4>
+        <textarea placeholder="Write about the setting here..."></textarea>
+        <h4>Characters and Their Personalities</h4>
+        <textarea placeholder="Write about characters and their personalities here..."></textarea>
+      </div>
     </section>
-   
+  </main>
+  <footer>
+    <p>&copy; 2024 Alan and Isabella</p>
+  </footer>
+  <script>
+    // JavaScript for search functionality
+    document.getElementById("search-bar").addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      const chapters = document.querySelectorAll(".chapter");
 
-    <script>
-        // Save edits to local storage
-        function saveEdits() {
-            const edits = document.querySelectorAll('.editable');
-            const data = {};
-            edits.forEach((edit, index) => {
-                data[`editable-${index}`] = edit.innerHTML;
-            });
-            localStorage.setItem('novelEdits', JSON.stringify(data));
-            alert('Edits saved!');
+      chapters.forEach((chapter) => {
+        const text = chapter.textContent.toLowerCase();
+        if (text.includes(query)) {
+          chapter.classList.remove("hidden");
+        } else {
+          chapter.classList.add("hidden");
         }
-
-        // Load saved edits
-        function loadEdits() {
-            const savedData = JSON.parse(localStorage.getItem('novelEdits'));
-            if (savedData) {
-                const edits = document.querySelectorAll('.editable');
-                edits.forEach((edit, index) => {
-                    if (savedData[`editable-${index}`]) {
-                        edit.innerHTML = savedData[`editable-${index}`];
-                    }
-                });
-            }
-        }
-
-        // Clear saved edits
-        function clearEdits() {
-            if (confirm('Are you sure you want to clear all saved edits?')) {
-                localStorage.removeItem('novelEdits');
-                location.reload();
-            }
-        }
-        // Load edits on page load
-        window.onload = loadEdits;
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>
