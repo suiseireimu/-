@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><em>Never Let Me Go - Notes </em></title>
+  <title>Never Let Me Go - Notes</title>
   <style>
     /* General Styles */
     body {
@@ -96,7 +95,7 @@
   <header>
     <h1>Notes for <em>Never Let Me Go</em></h1>
     <h2>By Alan and Isabella</h2>
-    <input id="search-bar" type="text" placeholder="Search for...">
+    <input id="search-bar" type="text" placeholder="Search for something...">
   </header>
   <main>
     <!-- Chapters Navigation -->
@@ -117,49 +116,50 @@
       <div id="chapter1" class="chapter">
         <h3>Chapter 1</h3>
         <h4>Settings</h4>
-        <textarea placeholder="Write the setting this chapter introduced here..."></textarea>
-        <h4>Characters</h4>
-        <textarea placeholder="Write about their personalities or something other here..."></textarea>
+        <textarea data-key="chapter1-settings" placeholder="Write about the setting here..."></textarea>
+        <h4>Characters and Their Personalities</h4>
+        <textarea data-key="chapter1-characters" placeholder="Write some about characters here..."></textarea>
       </div>
 
       <div id="chapter2" class="chapter">
         <h3>Chapter 2</h3>
         <h4>Settings</h4>
-        <textarea placeholder="Write the setting this chapter introduced here..."></textarea>
-        <h4>Characters</h4>
-        <textarea placeholder="adding some new here..."></textarea>
+        <textarea data-key="chapter2-settings" placeholder="Write about the setting here..."></textarea>
+        <h4>Characters and Their Personalities</h4>
+        <textarea data-key="chapter2-characters" placeholder="Write some new about characters here..."></textarea>
       </div>
 
+      <!-- Repeat for Chapters 3-6 -->
       <div id="chapter3" class="chapter">
         <h3>Chapter 3</h3>
         <h4>Settings</h4>
-        <textarea placeholder="Write the setting this chapter introduced here..."></textarea>
-        <h4>Characters</h4>
-        <textarea placeholder="adding some newer here..."></textarea>
+        <textarea data-key="chapter3-settings" placeholder="More about the setting here..."></textarea>
+        <h4>Characters and Their Personalities</h4>
+        <textarea data-key="chapter3-characters" placeholder="Write some newer here..."></textarea>
       </div>
 
       <div id="chapter4" class="chapter">
         <h3>Chapter 4</h3>
         <h4>Settings</h4>
-        <textarea placeholder="Write the setting this chapter introduced here..."></textarea>
-        <h4>Characters</h4>
-        <textarea placeholder="adding some newerer here..."></textarea>
+        <textarea data-key="chapter4-settings" placeholder="Morere about the setting here..."></textarea>
+        <h4>Characters and Their Personalities</h4>
+        <textarea data-key="chapter4-characters" placeholder="Write some newerer here..."></textarea>
       </div>
 
       <div id="chapter5" class="chapter">
         <h3>Chapter 5</h3>
         <h4>Settings</h4>
-        <textarea placeholder="Write the setting this chapter introduced here..."></textarea>
-        <h4>Characters</h4>
-        <textarea placeholder="adding some newererer here..."></textarea>
+        <textarea data-key="chapter5-settings" placeholder="Morerere about the setting here..."></textarea>
+        <h4>Characters and Their Personalities</h4>
+        <textarea data-key="chapter5-characters" placeholder="Write some newererer here..."></textarea>
       </div>
 
       <div id="chapter6" class="chapter">
         <h3>Chapter 6</h3>
         <h4>Settings</h4>
-        <textarea placeholder="Write the setting this chapter introduced here..."></textarea>
-        <h4>Characters</h4>
-        <textarea placeholder="adding some newerererer here..."></textarea>
+        <textarea data-key="chapter6-settings" placeholder="Morererere about the setting here..."></textarea>
+        <h4>Characters and Their Personalities</h4>
+        <textarea data-key="chapter6-characters" placeholder="Write some newerererer here..."></textarea>
       </div>
     </section>
   </main>
@@ -167,32 +167,35 @@
     <p>&copy; 2024 Alan and Isabella</p>
   </footer>
   <script>
+    // JavaScript for editing, saving, and search functionality
     document.addEventListener("DOMContentLoaded", () => {
-  const textareas = document.querySelectorAll("textarea");
+      const textareas = document.querySelectorAll("textarea");
+      const searchBar = document.getElementById("search-bar");
 
-  // Load saved notes from localStorage
-  textareas.forEach((textarea) => {
-    const key = textarea.dataset.key;
-    textarea.value = localStorage.getItem(key) || "";
+      // Load saved notes from localStorage
+      textareas.forEach((textarea) => {
+        const key = textarea.dataset.key;
+        textarea.value = localStorage.getItem(key) || "";
 
-    // Save to localStorage on input
-    textarea.addEventListener("input", () => {
-      localStorage.setItem(key, textarea.value);
-    });
-  });
-});
-    // JavaScript for search functionality
-    document.getElementById("search-bar").addEventListener("input", function () {
-      const query = this.value.toLowerCase();
-      const chapters = document.querySelectorAll(".chapter");
+        // Save to localStorage on input
+        textarea.addEventListener("input", () => {
+          localStorage.setItem(key, textarea.value);
+        });
+      });
 
-      chapters.forEach((chapter) => {
-        const text = chapter.textContent.toLowerCase();
-        if (text.includes(query)) {
-          chapter.classList.remove("hidden");
-        } else {
-          chapter.classList.add("hidden");
-        }
+      // Search functionality
+      searchBar.addEventListener("input", function () {
+        const query = this.value.toLowerCase();
+        const chapters = document.querySelectorAll(".chapter");
+
+        chapters.forEach((chapter) => {
+          const text = chapter.textContent.toLowerCase();
+          if (text.includes(query)) {
+            chapter.classList.remove("hidden");
+          } else {
+            chapter.classList.add("hidden");
+          }
+        });
       });
     });
   </script>
