@@ -65,6 +65,22 @@
       resize: vertical;
     }
 
+    button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px 20px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      background-color: #0ABAB5;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #088A80;
+    }
+
     .timestamp {
       font-size: 12px;
       color: #555;
@@ -78,25 +94,12 @@
       background-color: #333;
       color: white;
     }
-
-    #search-bar {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
   </style>
-  <!-- Add Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"></script>
 </head>
 <body>
   <header>
     <h1>Notes for "Never Let Me Go"</h1>
     <h2>By Alan and Isabella</h2>
-    <input id="search-bar" type="text" placeholder="Search for specific content...">
   </header>
   <main>
     <nav>
@@ -113,37 +116,43 @@
     <section id="sections">
       <div id="setting" class="section">
         <h3>Setting</h3>
-        <textarea data-key="setting-notes" placeholder="Write about the settings here..."></textarea>
+        <textarea id="setting-notes" placeholder="Write about the settings here..."></textarea>
+        <button onclick="saveNotes('setting')">Save</button>
         <div class="timestamp" id="timestamp-setting">Last edited: Never</div>
       </div>
 
       <div id="characters" class="section">
         <h3>Characters</h3>
-        <textarea data-key="characters-notes" placeholder="Write about the characters here..."></textarea>
+        <textarea id="characters-notes" placeholder="Write about the characters here..."></textarea>
+        <button onclick="saveNotes('characters')">Save</button>
         <div class="timestamp" id="timestamp-characters">Last edited: Never</div>
       </div>
 
       <div id="themes" class="section">
         <h3>Themes</h3>
-        <textarea data-key="themes-notes" placeholder="Write about the themes here..."></textarea>
+        <textarea id="themes-notes" placeholder="Write about the themes here..."></textarea>
+        <button onclick="saveNotes('themes')">Save</button>
         <div class="timestamp" id="timestamp-themes">Last edited: Never</div>
       </div>
 
       <div id="questions" class="section">
         <h3>Questions</h3>
-        <textarea data-key="questions-notes" placeholder="Write any questions or discussion points here..."></textarea>
+        <textarea id="questions-notes" placeholder="Write any questions or discussion points here..."></textarea>
+        <button onclick="saveNotes('questions')">Save</button>
         <div class="timestamp" id="timestamp-questions">Last edited: Never</div>
       </div>
 
       <div id="important-moments" class="section">
         <h3>Important Moments</h3>
-        <textarea data-key="important-moments-notes" placeholder="Write about important moments here..."></textarea>
+        <textarea id="important-moments-notes" placeholder="Write about important moments here..."></textarea>
+        <button onclick="saveNotes('important-moments')">Save</button>
         <div class="timestamp" id="timestamp-important-moments">Last edited: Never</div>
       </div>
 
       <div id="additional-sections" class="section">
         <h3>Additional Sections</h3>
-        <textarea data-key="additional-sections-notes" placeholder="Write any additional notes here..."></textarea>
+        <textarea id="additional-sections-notes" placeholder="Write any additional notes here..."></textarea>
+        <button onclick="saveNotes('additional-sections')">Save</button>
         <div class="timestamp" id="timestamp-additional-sections">Last edited: Never</div>
       </div>
     </section>
@@ -152,49 +161,54 @@
     <p>&copy; 2024 Alan and Isabella</p>
   </footer>
   <script>
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      databaseURL: "YOUR_DATABASE_URL",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
+    const API_URL = 'https://your-backend-api.com/notes';
 
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+    // Save notes to the server
+    function saveNotes(section) {
+      const textarea = document.getElementById(`${section}-notes`);
+      const timestamp = new Date().toLocaleString();
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const textareas = document.querySelectorAll("textarea");
-
-      textareas.forEach((textarea) => {
-        const key = textarea.dataset.key;
-        const timestampKey = `timestamp-${key}`;
-        const timestampEl = document.getElementById(`timestamp-${key.split("-")[0]}`);
-
-        // Sync data from Firebase
-        const notesRef = firebase.database().ref(`notes/${key}`);
-        const timestampRef = firebase.database().ref(`timestamps/${key}`);
-
-        notesRef.on("value", (snapshot) => {
-          textarea.value = snapshot.val() || "";
+      fetch(`${API_URL}/${section}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          content: textarea.value,
+          timestamp: timestamp,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById(`timestamp-${section}`).innerText = `Last edited: ${timestamp}`;
+          alert('Notes saved successfully!');
+        })
+        .catch((error) => {
+          console.error('Error saving notes:', error);
+          alert('Failed to save notes. Please try again.');
         });
+    }
 
-        timestampRef.on("value", (snapshot) => {
-          timestampEl.textContent = `Last edited: ${snapshot.val() || "Never"}`;
-        });
+    // Load notes from the server
+    function loadNotes() {
+      fetch(API_URL)
+        .then((response) => response.json())
+        .then((data) => {
+          Object.keys(data).forEach((section) => {
+            const textarea = document.getElementById(`${section}-notes`);
+            const timestampEl = document.getElementById(`timestamp-${section}`);
 
-        // Save changes to Firebase
-        textarea.addEventListener("input", () => {
-          const now = new Date().toLocaleString();
-          notesRef.set(textarea.value);
-          timestampRef.set(now);
-        });
-      });
-    });
+            if (textarea && timestampEl) {
+              textarea.value = data[section].content || '';
+              timestampEl.innerText = `Last edited: ${data[section].timestamp || 'Never'}`;
+            }
+          });
+        })
+        .catch((error) => console.error('Error loading notes:', error));
+    }
+
+    // Load notes when the page loads
+    document.addEventListener('DOMContentLoaded', loadNotes);
   </script>
 </body>
 </html>
