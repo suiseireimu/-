@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Never Let Me Go - By Alan & Isabella</title>
+    <title>Never Let Me Go - Editable by Alan & Isabella</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -43,37 +43,51 @@
             text-align: center;
             padding: 1rem 0;
         }
-        .search-box {
+        .toolbar {
             text-align: center;
-            margin: 2rem 0;
+            margin: 1rem 0;
         }
-        .search-box input {
+        button {
+            padding: 0.5rem 1rem;
+            margin: 0 0.5rem;
+            border: none;
+            background-color: #444;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #666;
+        }
+        [contenteditable] {
+            border: 1px dashed #ccc;
             padding: 0.5rem;
-            width: 60%;
-            border: 1px solid #ddd;
-        }
-        .hidden {
-            display: none;
         }
     </style>
     <script>
-        function searchSite() {
-            const query = document.getElementById("search").value.toLowerCase();
-            const sections = document.querySelectorAll("section");
-            sections.forEach(section => {
-                if (section.innerText.toLowerCase().includes(query)) {
-                    section.classList.remove("hidden");
-                } else {
-                    section.classList.add("hidden");
-                }
+        function toggleEditMode() {
+            const editableElements = document.querySelectorAll("[contenteditable]");
+            editableElements.forEach(element => {
+                element.contentEditable = element.contentEditable === "true" ? "false" : "true";
             });
+            alert(editableElements[0].contentEditable === "true" ? "Edit mode enabled!" : "Edit mode disabled!");
+        }
+
+        function saveContent() {
+            const content = {};
+            const editableElements = document.querySelectorAll("[contenteditable]");
+            editableElements.forEach(element => {
+                content[element.id] = element.innerHTML;
+            });
+            console.log("Saved content:", content);
+            alert("Content saved! Open the console (F12) to view it.");
+            // To persist the data, send `content` to a server or save it in localStorage.
         }
     </script>
 </head>
 <body>
     <header>
-        <h1>Never Let Me Go</h1>
-        <p>By Alan and Isabella</p>
+        <h1 contenteditable="false" id="header-title">Never Let Me Go</h1>
+        <p contenteditable="false" id="header-subtitle">By Alan and Isabella</p>
     </header>
     <nav>
         <a href="#setting">Setting</a>
@@ -83,65 +97,5 @@
         <a href="#questions">Questions</a>
         <a href="#additional">Additional</a>
     </nav>
-    <div class="search-box">
-        <input
-            type="text"
-            id="search"
-            placeholder="Search for content..."
-            oninput="searchSite()"
-        />
-    </div>
-    <main>
-        <section id="setting">
-            <h2>Setting</h2>
-            <p>The novel is set in a dystopian England, featuring locations such as Hailsham, the Cottages, and medical recovery centers.</p>
-        </section>
-
-        <section id="characters">
-            <h2>Characters</h2>
-            <ul>
-                <li><strong>Kathy H.:</strong> The protagonist and narrator.</li>
-                <li><strong>Tommy:</strong> Kathy's friend with a temper but a kind heart.</li>
-                <li><strong>Ruth:</strong> Kathy's manipulative but significant friend.</li>
-                <li><strong>Miss Lucy:</strong> A teacher who reveals truths about their purpose.</li>
-            </ul>
-        </section>
-
-        <section id="themes">
-            <h2>Themes</h2>
-            <ul>
-                <li><strong>Identity:</strong> Exploring what it means to be human.</li>
-                <li><strong>Ethics:</strong> The moral questions surrounding cloning and organ donation.</li>
-                <li><strong>Nostalgia:</strong> The role of memory in shaping identity.</li>
-            </ul>
-        </section>
-
-        <section id="moments">
-            <h2>Important Moments</h2>
-            <p>Key moments in the novel include:</p>
-            <ul>
-                <li>Students at Hailsham discover their purpose as organ donors.</li>
-                <li>Kathy, Ruth, and Tommy visit Madame to explore the idea of "deferrals."</li>
-                <li>The ultimate realization of the futility of escaping their fate.</li>
-            </ul>
-        </section>
-
-        <section id="questions">
-            <h2>Questions</h2>
-            <ul>
-                <li>What role does the setting play in shaping the characters' understanding of themselves?</li>
-                <li>How does the novel portray the value of art and creativity?</li>
-                <li>What does the novel suggest about the importance of human relationships?</li>
-            </ul>
-        </section>
-
-        <section id="additional">
-            <h2>Additional Notes</h2>
-            <p>This section can include comparisons to other works, historical context, or other observations about the novel.</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 By Alan and Isabella</p>
-    </footer>
-</body>
-</html>
+    <div class="toolbar">
+        <button onclick="toggleEditMode()">Toggle Edit
