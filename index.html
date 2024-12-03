@@ -19,10 +19,6 @@
       color: white;
     }
 
-    header h1, header h2 {
-      margin: 0;
-    }
-
     nav ul {
       display: flex;
       justify-content: center;
@@ -94,12 +90,25 @@
       background-color: #333;
       color: white;
     }
+
+    #search-bar {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .highlight {
+      background-color: yellow;
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>Notes for "Never Let Me Go"</h1>
-    <h2>By Alan and Isabella</h2>
+    <input id="search-bar" type="text" placeholder="Search across all notes..." oninput="searchNotes()">
   </header>
   <main>
     <nav>
@@ -116,42 +125,42 @@
     <section id="sections">
       <div id="setting" class="section">
         <h3>Setting</h3>
-        <textarea id="setting-notes" placeholder="Write about the settings here..."></textarea>
+        <textarea id="setting-notes"></textarea>
         <button onclick="saveNotes('setting')">Save</button>
         <div class="timestamp" id="timestamp-setting">Last edited: Never</div>
       </div>
 
       <div id="characters" class="section">
         <h3>Characters</h3>
-        <textarea id="characters-notes" placeholder="Write about the characters here..."></textarea>
+        <textarea id="characters-notes"></textarea>
         <button onclick="saveNotes('characters')">Save</button>
         <div class="timestamp" id="timestamp-characters">Last edited: Never</div>
       </div>
 
       <div id="themes" class="section">
         <h3>Themes</h3>
-        <textarea id="themes-notes" placeholder="Write about the themes here..."></textarea>
+        <textarea id="themes-notes"></textarea>
         <button onclick="saveNotes('themes')">Save</button>
         <div class="timestamp" id="timestamp-themes">Last edited: Never</div>
       </div>
 
       <div id="questions" class="section">
         <h3>Questions</h3>
-        <textarea id="questions-notes" placeholder="Write any questions or discussion points here..."></textarea>
+        <textarea id="questions-notes"></textarea>
         <button onclick="saveNotes('questions')">Save</button>
         <div class="timestamp" id="timestamp-questions">Last edited: Never</div>
       </div>
 
       <div id="important-moments" class="section">
         <h3>Important Moments</h3>
-        <textarea id="important-moments-notes" placeholder="Write about important moments here..."></textarea>
+        <textarea id="important-moments-notes"></textarea>
         <button onclick="saveNotes('important-moments')">Save</button>
         <div class="timestamp" id="timestamp-important-moments">Last edited: Never</div>
       </div>
 
       <div id="additional-sections" class="section">
         <h3>Additional Sections</h3>
-        <textarea id="additional-sections-notes" placeholder="Write any additional notes here..."></textarea>
+        <textarea id="additional-sections-notes"></textarea>
         <button onclick="saveNotes('additional-sections')">Save</button>
         <div class="timestamp" id="timestamp-additional-sections">Last edited: Never</div>
       </div>
@@ -161,54 +170,38 @@
     <p>&copy; 2024 Alan and Isabella</p>
   </footer>
   <script>
-    const API_URL = 'https://your-backend-api.com/notes';
+    const loadNotes = () => {
+      const sections = ["setting", "characters", "themes", "questions", "important-moments", "additional-sections"];
+      sections.forEach((section) => {
+        const content = localStorage.getItem(`${section}-notes`);
+        const timestamp = localStorage.getItem(`timestamp-${section}`);
+        document.getElementById(`${section}-notes`).value = content || "";
+        document.getElementById(`timestamp-${section}`).textContent = `Last edited: ${timestamp || "Never"}`;
+      });
+    };
 
-    // Save notes to the server
-    function saveNotes(section) {
+    const saveNotes = (section) => {
       const textarea = document.getElementById(`${section}-notes`);
       const timestamp = new Date().toLocaleString();
+      localStorage.setItem(`${section}-notes`, textarea.value);
+      localStorage.setItem(`timestamp-${section}`, timestamp);
+      document.getElementById(`timestamp-${section}`).textContent = `Last edited: ${timestamp}`;
+      alert("Notes saved successfully!");
+    };
 
-      fetch(`${API_URL}/${section}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          content: textarea.value,
-          timestamp: timestamp,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          document.getElementById(`timestamp-${section}`).innerText = `Last edited: ${timestamp}`;
-          alert('Notes saved successfully!');
-        })
-        .catch((error) => {
-          console.error('Error saving notes:', error);
-          alert('Failed to save notes. Please try again.');
-        });
-    }
+    const searchNotes = () => {
+      const query = document.getElementById("search-bar").value.toLowerCase();
+      const textareas = document.querySelectorAll("textarea");
 
-    // Load notes from the server
-    function loadNotes() {
-      fetch(API_URL)
-        .then((response) => response.json())
-        .then((data) => {
-          Object.keys(data).forEach((section) => {
-            const textarea = document.getElementById(`${section}-notes`);
-            const timestampEl = document.getElementById(`timestamp-${section}`);
+      textareas.forEach((textarea) => {
+        textarea.classList.remove("highlight");
+        if (textarea.value.toLowerCase().includes(query) && query) {
+          textarea.classList.add("highlight");
+        }
+      });
+    };
 
-            if (textarea && timestampEl) {
-              textarea.value = data[section].content || '';
-              timestampEl.innerText = `Last edited: ${data[section].timestamp || 'Never'}`;
-            }
-          });
-        })
-        .catch((error) => console.error('Error loading notes:', error));
-    }
-
-    // Load notes when the page loads
-    document.addEventListener('DOMContentLoaded', loadNotes);
+    document.addEventListener("DOMContentLoaded", loadNotes);
   </script>
 </body>
 </html>
