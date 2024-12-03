@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Never Let Me Go - Notes</title>
+  <title>Never Let Me Go - Collaborative Notes</title>
   <style>
-    /* General Styles */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -16,16 +15,12 @@
     header {
       text-align: center;
       padding: 20px;
-      background-color: #0ABAB5; /* Tiffany Blue Header */
+      background-color: #0ABAB5; /* Tiffany Blue */
       color: white;
     }
 
-    header h1 {
+    header h1, header h2 {
       margin: 0;
-    }
-
-    header h2 {
-      font-weight: normal;
     }
 
     nav ul {
@@ -77,10 +72,6 @@
       font-style: italic;
     }
 
-    .highlight {
-      background-color: yellow; /* Highlight for search matches */
-    }
-
     footer {
       text-align: center;
       padding: 10px;
@@ -97,15 +88,17 @@
       border-radius: 5px;
     }
   </style>
+  <!-- Add Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"></script>
 </head>
 <body>
   <header>
-    <h1>Notes for <em>Never Let Me Go</em></h1>
+    <h1>Notes for "Never Let Me Go"</h1>
     <h2>By Alan and Isabella</h2>
     <input id="search-bar" type="text" placeholder="Search for specific content...">
   </header>
   <main>
-    <!-- Navigation -->
     <nav>
       <ul>
         <li><a href="#setting">Setting</a></li>
@@ -117,44 +110,37 @@
       </ul>
     </nav>
 
-    <!-- Main Sections -->
     <section id="sections">
-      <!-- Setting Section -->
       <div id="setting" class="section">
         <h3>Setting</h3>
         <textarea data-key="setting-notes" placeholder="Write about the settings here..."></textarea>
         <div class="timestamp" id="timestamp-setting">Last edited: Never</div>
       </div>
 
-      <!-- Characters Section -->
       <div id="characters" class="section">
         <h3>Characters</h3>
         <textarea data-key="characters-notes" placeholder="Write about the characters here..."></textarea>
         <div class="timestamp" id="timestamp-characters">Last edited: Never</div>
       </div>
 
-      <!-- Themes Section -->
       <div id="themes" class="section">
         <h3>Themes</h3>
         <textarea data-key="themes-notes" placeholder="Write about the themes here..."></textarea>
         <div class="timestamp" id="timestamp-themes">Last edited: Never</div>
       </div>
 
-      <!-- Questions Section -->
       <div id="questions" class="section">
         <h3>Questions</h3>
         <textarea data-key="questions-notes" placeholder="Write any questions or discussion points here..."></textarea>
         <div class="timestamp" id="timestamp-questions">Last edited: Never</div>
       </div>
 
-      <!-- Important Moments Section -->
       <div id="important-moments" class="section">
         <h3>Important Moments</h3>
         <textarea data-key="important-moments-notes" placeholder="Write about important moments here..."></textarea>
         <div class="timestamp" id="timestamp-important-moments">Last edited: Never</div>
       </div>
 
-      <!-- Additional Sections -->
       <div id="additional-sections" class="section">
         <h3>Additional Sections</h3>
         <textarea data-key="additional-sections-notes" placeholder="Write any additional notes here..."></textarea>
@@ -166,50 +152,46 @@
     <p>&copy; 2024 Alan and Isabella</p>
   </footer>
   <script>
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      databaseURL: "YOUR_DATABASE_URL",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
     document.addEventListener("DOMContentLoaded", () => {
       const textareas = document.querySelectorAll("textarea");
-      const searchBar = document.getElementById("search-bar");
 
-      // Load saved notes and timestamps from localStorage
       textareas.forEach((textarea) => {
         const key = textarea.dataset.key;
         const timestampKey = `timestamp-${key}`;
         const timestampEl = document.getElementById(`timestamp-${key.split("-")[0]}`);
 
-        textarea.value = localStorage.getItem(key) || "";
-        timestampEl.textContent = `Last edited: ${localStorage.getItem(timestampKey) || "Never"}`;
+        // Sync data from Firebase
+        const notesRef = firebase.database().ref(`notes/${key}`);
+        const timestampRef = firebase.database().ref(`timestamps/${key}`);
 
-        // Save notes and update timestamps
-        textarea.addEventListener("input", () => {
-          const now = new Date();
-          const formattedTime = now.toLocaleString();
-
-          localStorage.setItem(key, textarea.value);
-          localStorage.setItem(timestampKey, formattedTime);
-          timestampEl.textContent = `Last edited: ${formattedTime}`;
+        notesRef.on("value", (snapshot) => {
+          textarea.value = snapshot.val() || "";
         });
-      });
 
-      // Search functionality
-      searchBar.addEventListener("input", function () {
-        const query = this.value.toLowerCase();
+        timestampRef.on("value", (snapshot) => {
+          timestampEl.textContent = `Last edited: ${snapshot.val() || "Never"}`;
+        });
 
-        textareas.forEach((textarea) => {
-          const content = textarea.value.toLowerCase();
-          const originalContent = textarea.value;
-
-          if (query) {
-            if (content.includes(query)) {
-              const regex = new RegExp(`(${query})`, "gi");
-              textarea.value = originalContent.replace(regex, "[$1]");
-              textarea.classList.add("highlight");
-            } else {
-              textarea.classList.remove("highlight");
-            }
-          } else {
-            textarea.classList.remove("highlight");
-            textarea.value = originalContent;
-          }
+        // Save changes to Firebase
+        textarea.addEventListener("input", () => {
+          const now = new Date().toLocaleString();
+          notesRef.set(textarea.value);
+          timestampRef.set(now);
         });
       });
     });
