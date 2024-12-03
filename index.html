@@ -1,101 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Never Let Me Go - Editable by Alan & Isabella</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 1.5rem 0;
-        }
-        nav {
-            background-color: #444;
-            padding: 0.5rem;
-            text-align: center;
-        }
-        nav a {
-            color: white;
-            margin: 0 1rem;
-            text-decoration: none;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        section {
-            padding: 2rem;
-            border-bottom: 1px solid #ddd;
-        }
-        h2 {
-            color: #333;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 1rem 0;
-        }
-        .toolbar {
-            text-align: center;
-            margin: 1rem 0;
-        }
-        button {
-            padding: 0.5rem 1rem;
-            margin: 0 0.5rem;
-            border: none;
-            background-color: #444;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #666;
-        }
-        [contenteditable] {
-            border: 1px dashed #ccc;
-            padding: 0.5rem;
-        }
-    </style>
-    <script>
-        function toggleEditMode() {
-            const editableElements = document.querySelectorAll("[contenteditable]");
-            editableElements.forEach(element => {
-                element.contentEditable = element.contentEditable === "true" ? "false" : "true";
-            });
-            alert(editableElements[0].contentEditable === "true" ? "Edit mode enabled!" : "Edit mode disabled!");
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Never Let Me Go - Notes</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
 
-        function saveContent() {
-            const content = {};
-            const editableElements = document.querySelectorAll("[contenteditable]");
-            editableElements.forEach(element => {
-                content[element.id] = element.innerHTML;
-            });
-            console.log("Saved content:", content);
-            alert("Content saved! Open the console (F12) to view it.");
-            // To persist the data, send `content` to a server or save it in localStorage.
-        }
-    </script>
+    header {
+      text-align: center;
+      padding: 20px;
+      background-color: #4CAF50; /* Change header color here */
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    header h2 {
+      font-weight: normal;
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      padding: 0;
+      list-style: none;
+      background-color: #333; /* Change nav bar color here */
+    }
+
+    nav ul li {
+      margin: 0 10px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      padding: 10px 20px;
+      display: block;
+    }
+
+    nav ul li a:hover {
+      background-color: #575757;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin-bottom: 20px;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: vertical;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #333;
+      color: white;
+    }
+
+    #search-bar {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1 contenteditable="false" id="header-title">Never Let Me Go</h1>
-        <p contenteditable="false" id="header-subtitle">By Alan and Isabella</p>
-    </header>
+  <header>
+    <h1>Notes for "Never Let Me Go"</h1>
+    <h2>By Alan and Isabella</h2>
+    <input id="search-bar" type="text" placeholder="Search for settings, characters, themes, or more...">
+  </header>
+  <main>
+    <!-- Navigation -->
     <nav>
-        <a href="#setting">Setting</a>
-        <a href="#characters">Characters</a>
-        <a href="#themes">Themes</a>
-        <a href="#moments">Important Moments</a>
-        <a href="#questions">Questions</a>
-        <a href="#additional">Additional</a>
+      <ul>
+        <li><a href="#setting">Setting</a></li>
+        <li><a href="#characters">Characters</a></li>
+        <li><a href="#themes">Themes</a></li>
+        <li><a href="#questions">Questions</a></li>
+        <li><a href="#important-moments">Important Moments</a></li>
+        <li><a href="#additional-sections">Additional Sections</a></li>
+      </ul>
     </nav>
-    <div class="toolbar">
-        <button onclick="toggleEditMode()">Toggle Edit
+
+    <!-- Main Sections -->
+    <section id="sections">
+      <!-- Setting Section -->
+      <div id="setting" class="section">
+        <h3>Setting</h3>
+        <textarea data-key="setting-notes" placeholder="Write about the settings here..."></textarea>
+      </div>
+
+      <!-- Characters Section -->
+      <div id="characters" class="section">
+        <h3>Characters</h3>
+        <textarea data-key="characters-notes" placeholder="Write about the characters and their personalities here..."></textarea>
+      </div>
+
+      <!-- Themes Section -->
+      <div id="themes" class="section">
+        <h3>Themes</h3>
+        <textarea data-key="themes-notes" placeholder="Write about the themes here..."></textarea>
+      </div>
+
+      <!-- Questions Section -->
+      <div id="questions" class="section">
+        <h3>Questions</h3>
+        <textarea data-key="questions-notes" placeholder="Write any questions or discussion points here..."></textarea>
+      </div>
+
+      <!-- Important Moments Section -->
+      <div id="important-moments" class="section">
+        <h3>Important Moments</h3>
+        <textarea data-key="important-moments-notes" placeholder="Write about important moments here..."></textarea>
+      </div>
+
+      <!-- Additional Sections -->
+      <div id="additional-sections" class="section">
+        <h3>Additional Sections</h3>
+        <textarea data-key="additional-sections-notes" placeholder="Write any additional notes here..."></textarea>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 Alan and Isabella</p>
+  </footer>
+  <script>
+    // JavaScript for editing, saving, and search functionality
+    document.addEventListener("DOMContentLoaded", () => {
+      const textareas = document.querySelectorAll("textarea");
+      const searchBar = document.getElementById("search-bar");
+
+      // Load saved notes from localStorage
+      textareas.forEach((textarea) => {
+        const key = textarea.dataset.key;
+        textarea.value = localStorage.getItem(key) || "";
+
+        // Save to localStorage on input
+        textarea.addEventListener("input", () => {
+          localStorage.setItem(key, textarea.value);
+        });
+      });
+
+      // Search functionality
+      searchBar.addEventListener("input", function () {
+        const query = this.value.toLowerCase();
+        const sections = document.querySelectorAll(".section");
+
+        sections.forEach((section) => {
+          const text = section.textContent.toLowerCase();
+          if (text.includes(query)) {
+            section.classList.remove("hidden");
+          } else {
+            section.classList.add("hidden");
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
