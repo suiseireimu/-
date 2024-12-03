@@ -16,7 +16,7 @@
     header {
       text-align: center;
       padding: 20px;
-      background-color: #0ABAB5; /* Change header color here */
+      background-color: #0ABAB5; /* Tiffany Blue Header */
       color: white;
     }
 
@@ -33,7 +33,7 @@
       justify-content: center;
       padding: 0;
       list-style: none;
-      background-color: #333; /* Change nav bar color here */
+      background-color: #333;
     }
 
     nav ul li {
@@ -62,12 +62,23 @@
     textarea {
       width: 100%;
       height: 150px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       padding: 10px;
       font-size: 14px;
       border: 1px solid #ccc;
       border-radius: 5px;
       resize: vertical;
+    }
+
+    .timestamp {
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .highlight {
+      background-color: yellow; /* Highlight for search matches */
     }
 
     footer {
@@ -85,17 +96,13 @@
       border: 1px solid #ccc;
       border-radius: 5px;
     }
-
-    .hidden {
-      display: none;
-    }
   </style>
 </head>
 <body>
   <header>
     <h1>Notes for <em>Never Let Me Go</em></h1>
-    <h2><em>By Alan and Isabella</em></h2>
-    <input id="search-bar" type="text" placeholder="Search for settings, characters, themes, or more...">
+    <h2>By Alan and Isabella</h2>
+    <input id="search-bar" type="text" placeholder="Search for specific content...">
   </header>
   <main>
     <!-- Navigation -->
@@ -116,36 +123,42 @@
       <div id="setting" class="section">
         <h3>Setting</h3>
         <textarea data-key="setting-notes" placeholder="Write about the settings here..."></textarea>
+        <div class="timestamp" id="timestamp-setting">Last edited: Never</div>
       </div>
 
       <!-- Characters Section -->
       <div id="characters" class="section">
         <h3>Characters</h3>
-        <textarea data-key="characters-notes" placeholder="Write about the characters and their personalities here..."></textarea>
+        <textarea data-key="characters-notes" placeholder="Write about the characters here..."></textarea>
+        <div class="timestamp" id="timestamp-characters">Last edited: Never</div>
       </div>
 
       <!-- Themes Section -->
       <div id="themes" class="section">
         <h3>Themes</h3>
         <textarea data-key="themes-notes" placeholder="Write about the themes here..."></textarea>
+        <div class="timestamp" id="timestamp-themes">Last edited: Never</div>
       </div>
 
       <!-- Questions Section -->
       <div id="questions" class="section">
         <h3>Questions</h3>
         <textarea data-key="questions-notes" placeholder="Write any questions or discussion points here..."></textarea>
+        <div class="timestamp" id="timestamp-questions">Last edited: Never</div>
       </div>
 
       <!-- Important Moments Section -->
       <div id="important-moments" class="section">
         <h3>Important Moments</h3>
         <textarea data-key="important-moments-notes" placeholder="Write about important moments here..."></textarea>
+        <div class="timestamp" id="timestamp-important-moments">Last edited: Never</div>
       </div>
 
       <!-- Additional Sections -->
       <div id="additional-sections" class="section">
         <h3>Additional Sections</h3>
         <textarea data-key="additional-sections-notes" placeholder="Write any additional notes here..."></textarea>
+        <div class="timestamp" id="timestamp-additional-sections">Last edited: Never</div>
       </div>
     </section>
   </main>
@@ -153,33 +166,49 @@
     <p>&copy; 2024 Alan and Isabella</p>
   </footer>
   <script>
-    // JavaScript for editing, saving, and search functionality
     document.addEventListener("DOMContentLoaded", () => {
       const textareas = document.querySelectorAll("textarea");
       const searchBar = document.getElementById("search-bar");
 
-      // Load saved notes from localStorage
+      // Load saved notes and timestamps from localStorage
       textareas.forEach((textarea) => {
         const key = textarea.dataset.key;
-        textarea.value = localStorage.getItem(key) || "";
+        const timestampKey = `timestamp-${key}`;
+        const timestampEl = document.getElementById(`timestamp-${key.split("-")[0]}`);
 
-        // Save to localStorage on input
+        textarea.value = localStorage.getItem(key) || "";
+        timestampEl.textContent = `Last edited: ${localStorage.getItem(timestampKey) || "Never"}`;
+
+        // Save notes and update timestamps
         textarea.addEventListener("input", () => {
+          const now = new Date();
+          const formattedTime = now.toLocaleString();
+
           localStorage.setItem(key, textarea.value);
+          localStorage.setItem(timestampKey, formattedTime);
+          timestampEl.textContent = `Last edited: ${formattedTime}`;
         });
       });
 
       // Search functionality
       searchBar.addEventListener("input", function () {
         const query = this.value.toLowerCase();
-        const sections = document.querySelectorAll(".section");
 
-        sections.forEach((section) => {
-          const text = section.textContent.toLowerCase();
-          if (text.includes(query)) {
-            section.classList.remove("hidden");
+        textareas.forEach((textarea) => {
+          const content = textarea.value.toLowerCase();
+          const originalContent = textarea.value;
+
+          if (query) {
+            if (content.includes(query)) {
+              const regex = new RegExp(`(${query})`, "gi");
+              textarea.value = originalContent.replace(regex, "[$1]");
+              textarea.classList.add("highlight");
+            } else {
+              textarea.classList.remove("highlight");
+            }
           } else {
-            section.classList.add("hidden");
+            textarea.classList.remove("highlight");
+            textarea.value = originalContent;
           }
         });
       });
