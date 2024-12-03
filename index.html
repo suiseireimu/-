@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Never Let Me Go - Notes</title>
   <style>
-    /* General Styles */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -16,16 +15,12 @@
     header {
       text-align: center;
       padding: 20px;
-      background-color: #0ABAB5; /* Tiffany Blue Header */
+      background-color: #0ABAB5; /* Tiffany Blue */
       color: white;
     }
 
-    header h1 {
+    header h1, header h2 {
       margin: 0;
-    }
-
-    header h2 {
-      font-weight: normal;
     }
 
     nav ul {
@@ -78,7 +73,7 @@
     }
 
     .highlight {
-      background-color: yellow; /* Highlight for search matches */
+      background-color: yellow;
     }
 
     footer {
@@ -105,7 +100,6 @@
     <input id="search-bar" type="text" placeholder="Search for specific content...">
   </header>
   <main>
-    <!-- Navigation -->
     <nav>
       <ul>
         <li><a href="#setting">Setting</a></li>
@@ -117,44 +111,37 @@
       </ul>
     </nav>
 
-    <!-- Main Sections -->
     <section id="sections">
-      <!-- Setting Section -->
       <div id="setting" class="section">
         <h3>Setting</h3>
         <textarea data-key="setting-notes" placeholder="Write about the settings here..."></textarea>
         <div class="timestamp" id="timestamp-setting">Last edited: Never</div>
       </div>
 
-      <!-- Characters Section -->
       <div id="characters" class="section">
         <h3>Characters</h3>
         <textarea data-key="characters-notes" placeholder="Write about the characters here..."></textarea>
         <div class="timestamp" id="timestamp-characters">Last edited: Never</div>
       </div>
 
-      <!-- Themes Section -->
       <div id="themes" class="section">
         <h3>Themes</h3>
         <textarea data-key="themes-notes" placeholder="Write about the themes here..."></textarea>
         <div class="timestamp" id="timestamp-themes">Last edited: Never</div>
       </div>
 
-      <!-- Questions Section -->
       <div id="questions" class="section">
         <h3>Questions</h3>
         <textarea data-key="questions-notes" placeholder="Write any questions or discussion points here..."></textarea>
         <div class="timestamp" id="timestamp-questions">Last edited: Never</div>
       </div>
 
-      <!-- Important Moments Section -->
       <div id="important-moments" class="section">
         <h3>Important Moments</h3>
         <textarea data-key="important-moments-notes" placeholder="Write about important moments here..."></textarea>
         <div class="timestamp" id="timestamp-important-moments">Last edited: Never</div>
       </div>
 
-      <!-- Additional Sections -->
       <div id="additional-sections" class="section">
         <h3>Additional Sections</h3>
         <textarea data-key="additional-sections-notes" placeholder="Write any additional notes here..."></textarea>
@@ -191,23 +178,14 @@
       });
 
       // Search functionality
-      searchBar.addEventListener("input", function () {
-        const query = this.value.toLowerCase();
-
+      searchBar.addEventListener("input", () => {
+        const query = searchBar.value.toLowerCase();
         textareas.forEach((textarea) => {
-          const content = textarea.value.toLowerCase();
           const originalContent = textarea.value;
-
           if (query) {
-            if (content.includes(query)) {
-              const regex = new RegExp(`(${query})`, "gi");
-              textarea.value = originalContent.replace(regex, "[$1]");
-              textarea.classList.add("highlight");
-            } else {
-              textarea.classList.remove("highlight");
-            }
+            const regex = new RegExp(`(${query})`, "gi");
+            textarea.value = originalContent.replace(regex, "**$1**");
           } else {
-            textarea.classList.remove("highlight");
             textarea.value = originalContent;
           }
         });
