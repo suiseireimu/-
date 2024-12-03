@@ -1,203 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Never Let Me Go - Notes</title>
-  <style>
-    /* General Styles */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-    }
-
-    header {
-      text-align: center;
-      padding: 20px;
-      background-color: #81d8ce;
-      color: white;
-    }
-
-    header h1 {
-      margin: 0;
-    }
-
-    header h2 {
-      font-weight: normal;
-    }
-
-    nav ul {
-      display: flex;
-      justify-content: center;
-      padding: 0;
-      list-style: none;
-      background-color: #333;
-    }
-
-    nav ul li {
-      margin: 0 10px;
-    }
-
-    nav ul li a {
-      text-decoration: none;
-      color: white;
-      padding: 10px 20px;
-      display: block;
-    }
-
-    nav ul li a:hover {
-      background-color: #575757;
-    }
-
-    main {
-      padding: 20px;
-    }
-
-    .chapter {
-      margin-bottom: 40px;
-    }
-
-    textarea {
-      width: 100%;
-      height: 100px;
-      margin-bottom: 20px;
-      padding: 10px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      resize: vertical;
-    }
-
-    footer {
-      text-align: center;
-      padding: 10px;
-      background-color: #333;
-      color: white;
-    }
-
-    #search-bar {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .hidden {
-      display: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Never Let Me Go - By Alan & Isabella</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+        }
+        nav {
+            background-color: #444;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        section {
+            padding: 2rem;
+            border-bottom: 1px solid #ddd;
+        }
+        h2 {
+            color: #333;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        .search-box {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .search-box input {
+            padding: 0.5rem;
+            width: 60%;
+            border: 1px solid #ddd;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script>
+        function searchSite() {
+            const query = document.getElementById("search").value.toLowerCase();
+            const sections = document.querySelectorAll("section");
+            sections.forEach(section => {
+                if (section.innerText.toLowerCase().includes(query)) {
+                    section.classList.remove("hidden");
+                } else {
+                    section.classList.add("hidden");
+                }
+            });
+        }
+    </script>
 </head>
 <body>
-  <header>
-    <h1>Notes for <em>Never Let Me Go</em></h1>
-    <h2>By Alan and Isabella</h2>
-    <input id="search-bar" type="text" placeholder="Search for something...">
-  </header>
-  <main>
-    <!-- Chapters Navigation -->
+    <header>
+        <h1>Never Let Me Go</h1>
+        <p>By Alan and Isabella</p>
+    </header>
     <nav>
-      <ul>
-        <li><a href="#chapter1">Chapter 1</a></li>
-        <li><a href="#chapter2">Chapter 2</a></li>
-        <li><a href="#chapter3">Chapter 3</a></li>
-        <li><a href="#chapter4">Chapter 4</a></li>
-        <li><a href="#chapter5">Chapter 5</a></li>
-        <li><a href="#chapter6">Chapter 6</a></li>
-      </ul>
+        <a href="#setting">Setting</a>
+        <a href="#characters">Characters</a>
+        <a href="#themes">Themes</a>
+        <a href="#moments">Important Moments</a>
+        <a href="#questions">Questions</a>
+        <a href="#additional">Additional</a>
     </nav>
+    <div class="search-box">
+        <input
+            type="text"
+            id="search"
+            placeholder="Search for content..."
+            oninput="searchSite()"
+        />
+    </div>
+    <main>
+        <section id="setting">
+            <h2>Setting</h2>
+            <p>The novel is set in a dystopian England, featuring locations such as Hailsham, the Cottages, and medical recovery centers.</p>
+        </section>
 
-    <!-- Chapters Section -->
-    <section id="chapters">
-      <!-- Template for each chapter -->
-      <div id="chapter1" class="chapter">
-        <h3>Chapter 1</h3>
-        <h4>Settings</h4>
-        <textarea data-key="chapter1-settings" placeholder="Write about the setting here..."></textarea>
-        <h4>Characters and Their Personalities</h4>
-        <textarea data-key="chapter1-characters" placeholder="Write some about characters here..."></textarea>
-      </div>
+        <section id="characters">
+            <h2>Characters</h2>
+            <ul>
+                <li><strong>Kathy H.:</strong> The protagonist and narrator.</li>
+                <li><strong>Tommy:</strong> Kathy's friend with a temper but a kind heart.</li>
+                <li><strong>Ruth:</strong> Kathy's manipulative but significant friend.</li>
+                <li><strong>Miss Lucy:</strong> A teacher who reveals truths about their purpose.</li>
+            </ul>
+        </section>
 
-      <div id="chapter2" class="chapter">
-        <h3>Chapter 2</h3>
-        <h4>Settings</h4>
-        <textarea data-key="chapter2-settings" placeholder="Write more about the setting here..."></textarea>
-        <h4>Characters and Their Personalities</h4>
-        <textarea data-key="chapter2-characters" placeholder="Write some new about characters here..."></textarea>
-      </div>
+        <section id="themes">
+            <h2>Themes</h2>
+            <ul>
+                <li><strong>Identity:</strong> Exploring what it means to be human.</li>
+                <li><strong>Ethics:</strong> The moral questions surrounding cloning and organ donation.</li>
+                <li><strong>Nostalgia:</strong> The role of memory in shaping identity.</li>
+            </ul>
+        </section>
 
-      <!-- Repeat for Chapters 3-6 -->
-      <div id="chapter3" class="chapter">
-        <h3>Chapter 3</h3>
-        <h4>Settings</h4>
-        <textarea data-key="chapter3-settings" placeholder="More about the setting here..."></textarea>
-        <h4>Characters and Their Personalities</h4>
-        <textarea data-key="chapter3-characters" placeholder="Write some newer here..."></textarea>
-      </div>
+        <section id="moments">
+            <h2>Important Moments</h2>
+            <p>Key moments in the novel include:</p>
+            <ul>
+                <li>Students at Hailsham discover their purpose as organ donors.</li>
+                <li>Kathy, Ruth, and Tommy visit Madame to explore the idea of "deferrals."</li>
+                <li>The ultimate realization of the futility of escaping their fate.</li>
+            </ul>
+        </section>
 
-      <div id="chapter4" class="chapter">
-        <h3>Chapter 4</h3>
-        <h4>Settings</h4>
-        <textarea data-key="chapter4-settings" placeholder="Morere about the setting here..."></textarea>
-        <h4>Characters and Their Personalities</h4>
-        <textarea data-key="chapter4-characters" placeholder="Write some newerer here..."></textarea>
-      </div>
+        <section id="questions">
+            <h2>Questions</h2>
+            <ul>
+                <li>What role does the setting play in shaping the characters' understanding of themselves?</li>
+                <li>How does the novel portray the value of art and creativity?</li>
+                <li>What does the novel suggest about the importance of human relationships?</li>
+            </ul>
+        </section>
 
-      <div id="chapter5" class="chapter">
-        <h3>Chapter 5</h3>
-        <h4>Settings</h4>
-        <textarea data-key="chapter5-settings" placeholder="Morerere about the setting here..."></textarea>
-        <h4>Characters and Their Personalities</h4>
-        <textarea data-key="chapter5-characters" placeholder="Write some newererer here..."></textarea>
-      </div>
-
-      <div id="chapter6" class="chapter">
-        <h3>Chapter 6</h3>
-        <h4>Settings</h4>
-        <textarea data-key="chapter6-settings" placeholder="Morererere about the setting here..."></textarea>
-        <h4>Characters and Their Personalities</h4>
-        <textarea data-key="chapter6-characters" placeholder="Write some newerererer here..."></textarea>
-      </div>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2024 Alan and Isabella</p>
-  </footer>
-  <script>
-    // JavaScript for editing, saving, and search functionality
-    document.addEventListener("DOMContentLoaded", () => {
-      const textareas = document.querySelectorAll("textarea");
-      const searchBar = document.getElementById("search-bar");
-
-      // Load saved notes from localStorage
-      textareas.forEach((textarea) => {
-        const key = textarea.dataset.key;
-        textarea.value = localStorage.getItem(key) || "";
-
-        // Save to localStorage on input
-        textarea.addEventListener("input", () => {
-          localStorage.setItem(key, textarea.value);
-        });
-      });
-
-      // Search functionality
-      searchBar.addEventListener("input", function () {
-        const query = this.value.toLowerCase();
-        const chapters = document.querySelectorAll(".chapter");
-
-        chapters.forEach((chapter) => {
-          const text = chapter.textContent.toLowerCase();
-          if (text.includes(query)) {
-            chapter.classList.remove("hidden");
-          } else {
-            chapter.classList.add("hidden");
-          }
-        });
-      });
-    });
-  </script>
+        <section id="additional">
+            <h2>Additional Notes</h2>
+            <p>This section can include comparisons to other works, historical context, or other observations about the novel.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 By Alan and Isabella</p>
+    </footer>
 </body>
 </html>
