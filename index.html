@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Never Let Me Go - Collaborative Notes</title>
+  <title>Collaborative Notes - Never Let Me Go</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -169,31 +169,55 @@
   <footer>
     <p>&copy; 2024 Alan and Isabella</p>
   </footer>
+  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"></script>
   <script>
+    // Firebase configuration
+    const firebaseConfig = {
+      databaseURL: "https://notes-for-never-let-me-go-default-rtdb.firebaseio.com/"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const sections = ["setting", "characters", "themes", "questions", "important-moments", "additional-sections"];
+
+    // Load notes from Firebase
     const loadNotes = () => {
-      const sections = ["setting", "characters", "themes", "questions", "important-moments", "additional-sections"];
-      sections.forEach((section) => {
-        const content = localStorage.getItem(`${section}-notes`);
-        const timestamp = localStorage.getItem(`timestamp-${section}`);
-        document.getElementById(`${section}-notes`).value = content || "";
-        document.getElementById(`timestamp-${section}`).textContent = `Last edited: ${timestamp || "Never"}`;
+      sections.forEach(section => {
+        const notesRef = db.ref(`notes/${section}`);
+        notesRef.on('value', snapshot => {
+          const data = snapshot.val();
+          if (data) {
+            document.getElementById(`${section}-notes`).value = data.content || "";
+            document.getElementById(`timestamp-${section}`).textContent = `Last edited: ${data.timestamp || "Never"}`;
+          }
+        });
       });
     };
 
+    // Save notes to Firebase
     const saveNotes = (section) => {
       const textarea = document.getElementById(`${section}-notes`);
       const timestamp = new Date().toLocaleString();
-      localStorage.setItem(`${section}-notes`, textarea.value);
-      localStorage.setItem(`timestamp-${section}`, timestamp);
-      document.getElementById(`timestamp-${section}`).textContent = `Last edited: ${timestamp}`;
-      alert("Notes saved successfully!");
+      db.ref(`notes/${section}`).set({
+        content: textarea.value,
+        timestamp: timestamp
+      }).then(() => {
+        document.getElementById(`timestamp-${section}`).textContent = `Last edited: ${timestamp}`;
+        alert("Notes saved successfully!");
+      }).catch(error => {
+        console.error("Error saving notes:", error);
+        alert("Failed to save notes. Please try again.");
+      });
     };
 
+    // Search notes
     const searchNotes = () => {
       const query = document.getElementById("search-bar").value.toLowerCase();
-      const textareas = document.querySelectorAll("textarea");
-
-      textareas.forEach((textarea) => {
+      sections.forEach(section => {
+        const textarea = document.getElementById(`${section}-notes`);
         textarea.classList.remove("highlight");
         if (textarea.value.toLowerCase().includes(query) && query) {
           textarea.classList.add("highlight");
