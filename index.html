@@ -19,6 +19,28 @@
       color: white;
     }
 
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #0ABAB5;
+      padding: 10px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
     #search-container {
       display: flex;
       justify-content: center;
@@ -65,15 +87,26 @@
   <header>
     <h1>Notes for "Never Let Me Go"</h1>
   </header>
+
+  <nav>
+    <a href="#setting">Setting</a>
+    <a href="#characters">Characters</a>
+    <a href="#themes">Themes</a>
+    <a href="#questions">Questions</a>
+    <a href="#important-moments">Important Moments</a>
+    <a href="#additional-sections">Additional Sections</a>
+  </nav>
+
   <div id="search-container">
     <input type="text" id="search-bar" placeholder="Search notes...">
     <button onclick="performSearch()">Search</button>
   </div>
+
   <main id="content">
     <section id="setting">
       <h2>Setting</h2>
-      <p>Hailsham: A mysterious boarding school with idyllic surroundings but an eerie purpose.</p>
-      <p>The Cottages: Brief mentions as future destinations outside of Hailsham.</p>
+      <p><strong>Hailsham:</strong> A secluded boarding school in the English countryside. It fosters a tranquil environment with its expansive fields, gardens, and art classes. Despite its idyllic setting, there’s an ominous undercurrent; students are subtly prepared for a mysterious, predefined future.</p>
+      <p><strong>The Cottages:</strong> Rural buildings introduced as a future destination. Former Hailsham students live semi-autonomous lives here before stepping into society. Little is revealed initially, adding to the novel's mystery.</p>
     </section>
     <section id="characters">
       <h2>Characters</h2>
@@ -107,6 +140,7 @@
       <p>Kathy’s reflections on small moments that reveal bigger truths.</p>
     </section>
   </main>
+
   <script>
     function performSearch() {
       const searchTerm = document.getElementById('search-bar').value.toLowerCase();
