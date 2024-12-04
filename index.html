@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Collaborative Notes - Never Let Me Go</title>
+  <title>Notes for "Never Let Me Go"</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -19,213 +19,120 @@
       color: white;
     }
 
-    nav ul {
+    #search-container {
       display: flex;
       justify-content: center;
-      padding: 0;
-      list-style: none;
-      background-color: #333;
+      margin: 20px;
     }
 
-    nav ul li {
-      margin: 0 10px;
-    }
-
-    nav ul li a {
-      text-decoration: none;
-      color: white;
-      padding: 10px 20px;
-      display: block;
-    }
-
-    nav ul li a:hover {
-      background-color: #575757;
-    }
-
-    main {
-      padding: 20px;
-    }
-
-    .section {
-      margin-bottom: 40px;
-    }
-
-    textarea {
-      width: 100%;
-      height: 150px;
-      margin-bottom: 10px;
+    #search-container input {
+      width: 300px;
       padding: 10px;
-      font-size: 14px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      resize: vertical;
+      margin-right: 10px;
     }
 
-    button {
-      display: block;
-      margin: 10px 0;
+    #search-container button {
       padding: 10px 20px;
-      font-size: 14px;
-      border: none;
-      border-radius: 5px;
       background-color: #0ABAB5;
       color: white;
+      border: none;
+      border-radius: 5px;
       cursor: pointer;
     }
 
-    button:hover {
+    #search-container button:hover {
       background-color: #088A80;
     }
 
-    .timestamp {
-      font-size: 12px;
-      color: #555;
-      margin-bottom: 20px;
-      font-style: italic;
+    section {
+      padding: 20px;
+      border-bottom: 1px solid #ddd;
     }
 
-    footer {
-      text-align: center;
-      padding: 10px;
-      background-color: #333;
-      color: white;
-    }
-
-    #search-bar {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+    section h2 {
+      color: #0ABAB5;
     }
 
     .highlight {
       background-color: yellow;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Notes <em>for "Never Let Me Go"</em></h1>
-    <input id="search-bar" type="text" placeholder="Search across all notes..." oninput="searchNotes()">
+    <h1>Notes for "Never Let Me Go"</h1>
   </header>
-  <main>
-    <nav>
-      <ul>
-        <li><a href="#setting">Setting</a></li>
-        <li><a href="#characters">Characters</a></li>
-        <li><a href="#themes">Themes</a></li>
-        <li><a href="#questions">Questions</a></li>
-        <li><a href="#important-moments">Important Moments</a></li>
-        <li><a href="#additional-sections">Additional Sections</a></li>
-      </ul>
-    </nav>
-
-    <section id="sections">
-      <div id="setting" class="section">
-        <h3>Setting</h3>
-        <textarea id="setting-notes"></textarea>
-        <button onclick="saveNotes('setting')">Save</button>
-        <div class="timestamp" id="timestamp-setting">Last edited: Never</div>
-      </div>
-
-      <div id="characters" class="section">
-        <h3>Characters</h3>
-        <textarea id="characters-notes"></textarea>
-        <button onclick="saveNotes('characters')">Save</button>
-        <div class="timestamp" id="timestamp-characters">Last edited: Never</div>
-      </div>
-
-      <div id="themes" class="section">
-        <h3>Themes</h3>
-        <textarea id="themes-notes"></textarea>
-        <button onclick="saveNotes('themes')">Save</button>
-        <div class="timestamp" id="timestamp-themes">Last edited: Never</div>
-      </div>
-
-      <div id="questions" class="section">
-        <h3>Questions</h3>
-        <textarea id="questions-notes"></textarea>
-        <button onclick="saveNotes('questions')">Save</button>
-        <div class="timestamp" id="timestamp-questions">Last edited: Never</div>
-      </div>
-
-      <div id="important-moments" class="section">
-        <h3>Important Moments</h3>
-        <textarea id="important-moments-notes"></textarea>
-        <button onclick="saveNotes('important-moments')">Save</button>
-        <div class="timestamp" id="timestamp-important-moments">Last edited: Never</div>
-      </div>
-
-      <div id="additional-sections" class="section">
-        <h3>Additional Sections</h3>
-        <textarea id="additional-sections-notes"></textarea>
-        <button onclick="saveNotes('additional-sections')">Save</button>
-        <div class="timestamp" id="timestamp-additional-sections">Last edited: Never</div>
-      </div>
+  <div id="search-container">
+    <input type="text" id="search-bar" placeholder="Search notes...">
+    <button onclick="performSearch()">Search</button>
+  </div>
+  <main id="content">
+    <section id="setting">
+      <h2>Setting</h2>
+      <p>Hailsham: A mysterious boarding school with idyllic surroundings but an eerie purpose.</p>
+      <p>The Cottages: Brief mentions as future destinations outside of Hailsham.</p>
+    </section>
+    <section id="characters">
+      <h2>Characters</h2>
+      <p><strong>Kathy H.:</strong> The protagonist and narrator, reflective and observant.</p>
+      <p><strong>Tommy:</strong> A temperamental but kind boy, struggles with self-expression.</p>
+      <p><strong>Ruth:</strong> Charismatic and controlling, yet insecure.</p>
+      <p><strong>Miss Lucy:</strong> A teacher who occasionally reveals uncomfortable truths about Hailsham.</p>
+      <p><strong>Madame:</strong> Mysterious figure connected to the "gallery."</p>
+    </section>
+    <section id="themes">
+      <h2>Themes</h2>
+      <p>Identity and Purpose: Students questioning their role in society.</p>
+      <p>Friendship and Power Dynamics: Complex relationships between Kathy, Ruth, and Tommy.</p>
+      <p>Ethics and Humanity: Subtle hints at the moral questions surrounding the students' existence.</p>
+    </section>
+    <section id="questions">
+      <h2>Questions</h2>
+      <p>Why are the students’ health and art so closely monitored?</p>
+      <p>What is the purpose of Hailsham’s emphasis on creativity?</p>
+      <p>Who is Madame, and what is the significance of the gallery?</p>
+    </section>
+    <section id="important-moments">
+      <h2>Important Moments</h2>
+      <p>Tommy’s tantrum and Miss Lucy’s reassurance about creativity.</p>
+      <p>Ruth giving Kathy the pencil case and its implications for their friendship.</p>
+      <p>Kathy discovering Madame’s reaction to the students.</p>
+    </section>
+    <section id="additional-sections">
+      <h2>Additional Sections</h2>
+      <p>Speculations about the guardians’ cryptic behavior.</p>
+      <p>Kathy’s reflections on small moments that reveal bigger truths.</p>
     </section>
   </main>
-  <footer>
-    <p>&copy; 2024 Alan and Isabella</p>
-  </footer>
-  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"></script>
   <script>
-    // Firebase configuration
-    const firebaseConfig = {
-      databaseURL: "https://test-bbc7a-default-rtdb.firebaseio.com/"
-    };
+    function performSearch() {
+      const searchTerm = document.getElementById('search-bar').value.toLowerCase();
+      const sections = document.querySelectorAll('section');
+      let firstMatch = null;
 
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-
-    const sections = ["setting", "characters", "themes", "questions", "important-moments", "additional-sections"];
-
-    // Load notes from Firebase
-    const loadNotes = () => {
       sections.forEach(section => {
-        const notesRef = db.ref(`notes/${section}`);
-        notesRef.on('value', snapshot => {
-          const data = snapshot.val();
-          if (data) {
-            document.getElementById(`${section}-notes`).value = data.content || "";
-            document.getElementById(`timestamp-${section}`).textContent = `Last edited: ${data.timestamp || "Never"}`;
+        const paragraphs = section.querySelectorAll('p');
+        paragraphs.forEach(paragraph => {
+          paragraph.innerHTML = paragraph.textContent; // Reset previous highlights
+          if (paragraph.textContent.toLowerCase().includes(searchTerm)) {
+            paragraph.innerHTML = paragraph.textContent.replace(
+              new RegExp(searchTerm, 'gi'),
+              match => `<span class="highlight">${match}</span>`
+            );
+            if (!firstMatch) firstMatch = section;
           }
         });
       });
-    };
 
-    // Save notes to Firebase
-    const saveNotes = (section) => {
-      const textarea = document.getElementById(`${section}-notes`);
-      const timestamp = new Date().toLocaleString();
-      db.ref(`notes/${section}`).set({
-        content: textarea.value,
-        timestamp: timestamp
-      }).then(() => {
-        document.getElementById(`timestamp-${section}`).textContent = `Last edited: ${timestamp}`;
-        alert("Notes saved successfully!");
-      }).catch(error => {
-        console.error("Error saving notes:", error);
-        alert("Failed to save notes. Please try again.");
-      });
-    };
-
-    // Search notes
-    const searchNotes = () => {
-      const query = document.getElementById("search-bar").value.toLowerCase();
-      sections.forEach(section => {
-        const textarea = document.getElementById(`${section}-notes`);
-        textarea.classList.remove("highlight");
-        if (textarea.value.toLowerCase().includes(query) && query) {
-          textarea.classList.add("highlight");
-        }
-      });
-    };
-
-    document.addEventListener("DOMContentLoaded", loadNotes);
+      if (firstMatch) {
+        firstMatch.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        alert('No matches found.');
+      }
+    }
   </script>
 </body>
 </html>
